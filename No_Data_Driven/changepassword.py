@@ -22,23 +22,23 @@ class TestChangePass(unittest.TestCase):
             err = 'Element with id {} could not be found!'
             raise Exception(err.format(element_id))
 
-    def test_a(self):
-        self.driver.get('https://account.hcmut.edu.vn/')
-        username = self.driver.find_element(By.NAME,"login")
-        oldpassword = self.driver.find_element(By.NAME,"oldpassword")
-        newpassword = self.driver.find_element(By.NAME,"newpassword")
-        confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
-        submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
+    # def test_1(self):
+    #     self.driver.get('https://account.hcmut.edu.vn/')
+    #     username = self.driver.find_element(By.NAME,"login")
+    #     oldpassword = self.driver.find_element(By.NAME,"oldpassword")
+    #     newpassword = self.driver.find_element(By.NAME,"newpassword")
+    #     confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
+    #     submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
-        oldpassword.send_keys("123456789")
-        newpassword.send_keys("12345678")
-        confirmpassword.send_keys("12345678")
+    #     username.send_keys("son.cuthanh27")
+    #     oldpassword.send_keys("12345678")
+    #     newpassword.send_keys("123456789")
+    #     confirmpassword.send_keys("123456789")
 
-        submitBtn.click()
-        time.sleep(2)
-        successAlert = self.driver.find_element(By.CLASS_NAME,'alert-success')
-        # assert successAlert.text == "  Your password was changed and your email password on Gmail will updated after 12 hours"
+    #     submitBtn.click()
+    #     time.sleep(2)
+    #     successAlert = self.driver.find_element(By.CLASS_NAME,'alert-success')
+    #     # assert successAlert.text == "  Your password was changed and your email password on Gmail will updated after 12 hours"
 
     def test_b(self):
         self.driver.get('https://account.hcmut.edu.vn/')
@@ -56,7 +56,7 @@ class TestChangePass(unittest.TestCase):
         submitBtn.click()
         time.sleep(2)
         alertDanger = self.driver.find_element(By.CLASS_NAME,'alert-danger')
-        # assert alertDanger.text == " Login or password incorrect"
+        assert alertDanger.text == "Login or password incorrect"
 
     def test_c(self):
         self.driver.get('https://account.hcmut.edu.vn/')
@@ -84,7 +84,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("11111111")
         newpassword.send_keys("123456789")
         confirmpassword.send_keys("123456789")
@@ -102,7 +102,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         newpassword.send_keys("123456789")
         confirmpassword.send_keys("123456789")
 
@@ -119,7 +119,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         confirmpassword.send_keys("123456789")
 
@@ -137,7 +137,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("dat.luongmason")
         confirmpassword.send_keys("dat.luongmason")
@@ -155,7 +155,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("12345678")
         confirmpassword.send_keys("12345678")
@@ -173,7 +173,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("12345")
         confirmpassword.send_keys("12345")
@@ -191,7 +191,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("123456789101112131415")
         confirmpassword.send_keys("123456789101112131415")
@@ -209,7 +209,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("123456789")
         confirmpassword.send_keys("123456711")
@@ -227,7 +227,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("123456789")
 
@@ -244,7 +244,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("1111111")
         confirmpassword.send_keys("1111111")
@@ -262,7 +262,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("12345678")
         newpassword.send_keys("11111111")
         confirmpassword.send_keys("11111111")
@@ -280,7 +280,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("11111111")
         newpassword.send_keys("111111111111")
         confirmpassword.send_keys("111111111111")
@@ -298,7 +298,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("111111111111")
         newpassword.send_keys("111111111111111")
         confirmpassword.send_keys("111111111111111")
@@ -316,7 +316,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("111111111111111")
         newpassword.send_keys("1111111111111111")
         confirmpassword.send_keys("1111111111111111")
@@ -334,7 +334,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("1111111111111111")
         newpassword.send_keys("11111111111111111")
         confirmpassword.send_keys("11111111111111111")
@@ -352,7 +352,7 @@ class TestChangePass(unittest.TestCase):
         confirmpassword = self.driver.find_element(By.NAME,"confirmpassword")
         submitBtn = self.driver.find_element(By.XPATH,"/html/body/div/div/div/div[3]/form/div[5]/div/button")
         
-        username.send_keys("dat.luongmason")
+        username.send_keys("son.cuthanh27")
         oldpassword.send_keys("1111111111111111")
         newpassword.send_keys("123456789")
         confirmpassword.send_keys("123456789")
@@ -360,7 +360,7 @@ class TestChangePass(unittest.TestCase):
         submitBtn.click()
         time.sleep(2)
         successAlert = self.driver.find_element(By.CLASS_NAME,'alert-success')
-        # assert successAlert.text == "  Your password was changed and your email password on Gmail will updated after 12 hours"
+        assert successAlert.text == "  Your password was changed and your email password on Gmail will updated after 12 hours"
 
     def tearDown(self):
         self.driver.quit()

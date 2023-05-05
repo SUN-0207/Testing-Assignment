@@ -19,8 +19,8 @@ class TestPrintTranscript(unittest.TestCase):
         password = self.driver.find_element(By.NAME,"password")  
         submitBtn = self.driver.find_element(By.NAME,"submit")  
         
-        username.send_keys("dat.luongmason")
-        password.send_keys("123456789")
+        username.send_keys("son.cuthanh27")
+        password.send_keys("02072002")
         submitBtn.click()
 
 
@@ -33,30 +33,26 @@ class TestPrintTranscript(unittest.TestCase):
             err = 'Element with id {} could not be found!'
             raise Exception(err.format(element_id))
 
-    def test_a(self):
+    def test_1(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
-        time.sleep(2)
 
         selectDest = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_coso"))
         selectDest.select_by_value("CS2")
-        time.sleep(2)
 
         quantityInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_txt_soluong")
         
-        confirmInp = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$chk_allow")
+        confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         confirmInp.click()
-        time.sleep(2)
 
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         submitBtn.click()
-        time.sleep(2)
         
         notification = self.driver.find_element(By.CSS_SELECTOR,'.msgBoxContent span')
         assert  "Nhập số lượng" == notification.text
 
-    def test_b(self):
+    def test_2(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -69,11 +65,11 @@ class TestPrintTranscript(unittest.TestCase):
         
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         assert not submitBtn.is_enabled()
 
 
-    def test_c(self):
+    def test_3(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -85,11 +81,11 @@ class TestPrintTranscript(unittest.TestCase):
 
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         assert not submitBtn.is_enabled()
         
 
-    def test_d(self):
+    def test_4(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -101,10 +97,10 @@ class TestPrintTranscript(unittest.TestCase):
         
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         assert not submitBtn.is_enabled()
 
-    def test_e(self):
+    def test_5(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -115,11 +111,11 @@ class TestPrintTranscript(unittest.TestCase):
         
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         assert not submitBtn.is_enabled()
         
 
-    def test_f(self):
+    def test_6(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -133,14 +129,14 @@ class TestPrintTranscript(unittest.TestCase):
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         confirmInp.click()
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         submitBtn.click()
         time.sleep(2)
         
         cancelPrint = self.driver.find_element(By.NAME,'ctl00$ContentPlaceHolder1$lst_dsphieu$ctl00$bnt_huyphieu')
         cancelPrint.click()
 
-    def test_g(self):
+    def test_7(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -154,11 +150,11 @@ class TestPrintTranscript(unittest.TestCase):
         
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         assert not submitBtn.is_enabled()
         
 
-    def test_h(self):
+    def test_8(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -170,10 +166,10 @@ class TestPrintTranscript(unittest.TestCase):
 
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         assert not submitBtn.is_enabled()
 
-    def test_i(self):
+    def test_9(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -187,7 +183,7 @@ class TestPrintTranscript(unittest.TestCase):
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         confirmInp.click()
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         submitBtn.click()
         time.sleep(2)
         
@@ -195,7 +191,7 @@ class TestPrintTranscript(unittest.TestCase):
         assert notification.text == "Số lượng in tối thiểu 1 và tối đa 9"
         
 
-    def test_k(self):
+    def test_10(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -207,14 +203,14 @@ class TestPrintTranscript(unittest.TestCase):
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         confirmInp.click()
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         submitBtn.click()
         time.sleep(2)
         
         notification = self.driver.find_element(By.CSS_SELECTOR,'.msgBoxContent span')
         assert notification.text == "Chọn nơi nhận kết quả"
         
-    def test_j(self):
+    def test_11(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -227,7 +223,7 @@ class TestPrintTranscript(unittest.TestCase):
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         confirmInp.click()
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         submitBtn.click()
         time.sleep(2)
         
@@ -235,7 +231,7 @@ class TestPrintTranscript(unittest.TestCase):
         assert notification.text == "Chọn nơi nhận kết quả"
         
 
-    def test_l(self):
+    def test_12(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -248,14 +244,14 @@ class TestPrintTranscript(unittest.TestCase):
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         confirmInp.click()
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         submitBtn.click()
         time.sleep(2)
         
         notification = self.driver.find_element(By.CSS_SELECTOR,'.msgBoxContent span')
         assert notification.text == "Chọn nơi nhận kết quả"
 
-    def test_m(self):
+    def test_13(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -269,7 +265,7 @@ class TestPrintTranscript(unittest.TestCase):
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         confirmInp.click()
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         submitBtn.click()
         time.sleep(2)
         
@@ -277,7 +273,7 @@ class TestPrintTranscript(unittest.TestCase):
         assert notification.text == "Nhập số lượng"
         
 
-    def test_n(self):
+    def test_14(self):
         self.driver.get('https://mybk.hcmut.edu.vn/apps/src/inbd/index.aspx')
         selectType = Select(self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_cbo_loaidangkyin"))
         selectType.select_by_value("TB")
@@ -290,7 +286,7 @@ class TestPrintTranscript(unittest.TestCase):
 
         confirmInp = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_chk_allow")
         
-        submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+        submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
         assert not submitBtn.is_enabled()
         
 

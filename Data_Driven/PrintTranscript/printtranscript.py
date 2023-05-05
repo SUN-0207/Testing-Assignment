@@ -51,8 +51,8 @@ class TestPrintTranscript():
     password = self.driver.find_element(By.NAME,"password")  
     submitBtn = self.driver.find_element(By.NAME,"submit")  
     
-    username.send_keys("dat.luongmason")
-    password.send_keys("123456789")
+    username.send_keys("son.cuthanh27")
+    password.send_keys("02072002")
     submitBtn.click()
   
   def teardown_method(self):
@@ -79,7 +79,7 @@ class TestPrintTranscript():
     if confirm == "yes":
         confirmInp.click()
     
-    submitBtn = self.driver.find_element(By.NAME,"ctl00$ContentPlaceHolder1$bnt_xacnhan")
+    submitBtn = self.driver.find_element(By.ID,"ctl00_ContentPlaceHolder1_bnt_xacnhan")
     
     if expectedResult == "Success":
         submitBtn.click()
@@ -93,7 +93,7 @@ class TestPrintTranscript():
         time.sleep(2)
         notification = self.driver.find_element(By.CSS_SELECTOR,'.msgBoxContent span')
         assert notification.text == "Chọn nơi nhận kết quả"
-    elif expectedResult == "LackQuanity": 
+    elif expectedResult == "LackQuantity": 
         submitBtn.click()
         time.sleep(2)
         notification = self.driver.find_element(By.CSS_SELECTOR,'.msgBoxContent span')
