@@ -3,12 +3,13 @@ import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+from selenium.common.exceptions import NoSuchElementException
 
 baseUrl = "https://mybk.hcmut.edu.vn/stinfo/"
 id = "352611458"
@@ -32,14 +33,17 @@ class TestUpdateID(unittest.TestCase):
         password.send_keys("lnt@H1720")
         submitBtn.click()
 
-    def get_element_wait(self, NameOfObject):
-        try:
-            item = WebDriverWait(self.driver, 15).until(
-                EC.presence_of_element_located((By.ID, NameOfObject)))
-            item.click()
-        except TimeoutException as e:
-            print("Couldn't Click by name on: " + str(NameOfObject))
-            pass
+    def teardown_method(self):
+        self.driver.quit()
+
+    # def get_element_wait(self, NameOfObject):
+    #     try:
+    #         item = WebDriverWait(self.driver, 15).until(
+    #             EC.presence_of_element_located((By.ID, NameOfObject)))
+    #         item.click()
+    #     except TimeoutException as e:
+    #         print("Couldn't Click by name on: " + str(NameOfObject))
+    #         pass
 
     def test_1(self):
         self.driver.get(baseUrl)
@@ -48,15 +52,26 @@ class TestUpdateID(unittest.TestCase):
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a').click()
         time.sleep(7)
 
-        self.get_element_wait("menu-cmnd-edit")
+        # self.get_element_wait("menu-cmnd-edit")
 
-        id_in = self.driver.find_element(By.ID, "cmndEditCMND")
-        place_in = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
-        date_in = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+        # id_in = self.driver.find_element(By.ID, "cmndEditCMND")
+        # place_in = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        # date_in = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
 
-        id_in.send_keys(id)
-        place_in.send_keys(place)
-        date_in.send_keys(date)
+        # id_in.send_keys(id)
+        # place_in.send_keys(place)
+        # date_in.send_keys(date)
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+        self.driver.execute_script(
+            f"arguments[0].setAttribute('value',{id})", idObj)
+        self.driver.execute_script(
+            "arguments[0].setAttribute('value',{place})", placeObj)
+        self.driver.execute_script(
+            f"arguments[0].setAttribute('value',{date})", dateObj)
+
+        self.driver.find_element(By.ID, "btn_save_cmnd").click()
 
         self.get_element_wait("btn_save_cmnd")
 
