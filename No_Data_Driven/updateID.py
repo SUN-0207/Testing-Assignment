@@ -10,59 +10,55 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
 
-loginURL = "https://sso.hcmut.edu.vn/cas/login?service=http%3A%2F%2Fmybk.hcmut.edu.vn%2Fstinfo%2F"
-username = "tan.lamcs1001"
-password = "lnt@H1720"
+baseUrl = "https://mybk.hcmut.edu.vn/stinfo/"
 
 
 class TestUpdateID(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
+        self.driver.maximize_window()
+        # dang nhap
+        self.driver.get("https://mybk.hcmut.edu.vn/my/logoutSSO.action")
+        self.driver.get(
+            'https://sso.hcmut.edu.vn/cas/login?service=https://mybk.hcmut.edu.vn/my/homeSSO.action')
+        username = self.driver.find_element(By.NAME, "username")
+        password = self.driver.find_element(By.NAME, "password")
+        submitBtn = self.driver.find_element(By.NAME, "submit")
+        # ----Submit---#
+        username.send_keys("tan.lamcs1001")
+        password.send_keys("lnt@H1720")
+        submitBtn.click()
 
     def get_element_wait(self, element_id, timeout=3):
         try:
             return WebDriverWait(self.driver, timeout).until(
-                # EC.presence_of_element_located((By.ID, element_id))
+                EC.presence_of_element_located((By.ID, element_id))
             )
         except TimeoutException:
             err = 'Element with id {} could not be found!'
             raise Exception(err.format(element_id))
 
     def test_1(self):
-        self.driver.get(loginURL)
-
-        self.driver.find_element(By.NAME, "username").send_keys(username)
-        self.driver.find_element(By.NAME, "password").send_keys(password)
-        self.driver.find_element(By.NAME, "submit").click()
-        time.sleep(5)
+        self.driver.get(baseUrl)
 
         self.driver.find_element(
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a').click()
         time.sleep(7)
 
-        edit = self.driver.find_element(By.ID, "menu-cmnd-edit")
-        time.sleep(1)
-        edit.click()
-        time.sleep(7)
+        self.get_element_wait("menu-cmnd-edit", 10)
 
-        self.driver.find_element(By.ID, "cmndEditCMND").send_keys("352611458")
-        self.driver.find_element(By.ID,
-                                 "cmndnoicapEditCMND").send_keys("Tỉnh An Giang")
-        self.driver.find_element(By.ID,
-                                 "cmndngaycapEditCMND").send_keys("06/12/2016")
-
-        # self.driver.execute_script(
-        #     "arguments[0].setAttribute('value','352611458')", )
-        # self.driver.execute_script(
-        #     "arguments[0].setAttribute('value','Tỉnh An Giang')", self.driver.find_element(By.ID, "cmndnoicapEditCMND"))
-        # self.driver.execute_script("arguments[0].setAttribute('value','06/12/2016')", self.driver.find_element(
-        #     By.ID, "cmndngaycapEditCMND"))
-
+        # time.sleep(7)
+        self.driver.execute_script(
+            "arguments[0].setAttribute('value','')", self.driver.find_element(By.ID, "cmndEditCMND"))
+        self.driver.execute_script(
+            "arguments[0].setAttribute('value','Đồng Nai')", self.driver.find_element(By.ID, "cmndnoicapEditCMND"))
+        self.driver.execute_script("arguments[0].setAttribute('value','2021')", self.driver.find_element(
+            By.ID, "cmndngaycapEditCMND"))
         self.driver.find_element(By.ID, "btn_save_cmnd").click()
         time.sleep(10)
 
         assert self.driver.find_element(
-            By.CLASS_NAME, 'bootbox-body') == "Thông tin cmnd của sinh viên đã được lưu!"
+            By.CLASS_NAME, 'bootbox-body').text == "Thông tin cmnd của sinh viên đã được lưu!"
 
     # def test_2(self):
     #     self.driver.get(
