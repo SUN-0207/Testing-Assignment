@@ -11,6 +11,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
 
 baseUrl = "https://mybk.hcmut.edu.vn/stinfo/"
+id = "352611458"
+place = "Tỉnh An Giang"
+date = "06/12/2016"
 
 
 class TestUpdateID(unittest.TestCase):
@@ -29,14 +32,14 @@ class TestUpdateID(unittest.TestCase):
         password.send_keys("lnt@H1720")
         submitBtn.click()
 
-    def get_element_wait(self, element_id, timeout=3):
+    def get_element_wait(self, NameOfObject):
         try:
-            return WebDriverWait(self.driver, timeout).until(
-                EC.presence_of_element_located((By.ID, element_id))
-            )
-        except TimeoutException:
-            err = 'Element with id {} could not be found!'
-            raise Exception(err.format(element_id))
+            item = WebDriverWait(self.driver, 15).until(
+                EC.presence_of_element_located((By.ID, NameOfObject)))
+            item.click()
+        except TimeoutException as e:
+            print("Couldn't Click by name on: " + str(NameOfObject))
+            pass
 
     def test_1(self):
         self.driver.get(baseUrl)
@@ -45,17 +48,17 @@ class TestUpdateID(unittest.TestCase):
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a').click()
         time.sleep(7)
 
-        self.get_element_wait("menu-cmnd-edit", 10)
+        self.get_element_wait("menu-cmnd-edit")
 
-        # time.sleep(7)
-        self.driver.execute_script(
-            "arguments[0].setAttribute('value','')", self.driver.find_element(By.ID, "cmndEditCMND"))
-        self.driver.execute_script(
-            "arguments[0].setAttribute('value','Đồng Nai')", self.driver.find_element(By.ID, "cmndnoicapEditCMND"))
-        self.driver.execute_script("arguments[0].setAttribute('value','2021')", self.driver.find_element(
-            By.ID, "cmndngaycapEditCMND"))
-        self.driver.find_element(By.ID, "btn_save_cmnd").click()
-        time.sleep(10)
+        id_in = self.driver.find_element(By.ID, "cmndEditCMND")
+        place_in = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        date_in = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+
+        id_in.send_keys(id)
+        place_in.send_keys(place)
+        date_in.send_keys(date)
+
+        self.get_element_wait("btn_save_cmnd")
 
         assert self.driver.find_element(
             By.CLASS_NAME, 'bootbox-body').text == "Thông tin cmnd của sinh viên đã được lưu!"
