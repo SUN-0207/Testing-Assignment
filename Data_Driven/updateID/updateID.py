@@ -11,6 +11,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from selenium.common.exceptions import NoSuchElementException
 
+
 class FileExcelReader:
     file = ""
     sheetName = ""
@@ -40,51 +41,66 @@ class FileExcelReader:
         sheet.cell(row=rownum, column=colnum).value = data
         wordbook.save(self.file)
 
+
 class TestUpdateID():
     def setup_method(self):
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
         self.vars = {}
-    
+
     def teardown_method(self):
         self.driver.quit()
 
     def first_step(self):
-        self.driver.get('https://sso.hcmut.edu.vn/cas/login?service=http%3A%2F%2Fmybk.hcmut.edu.vn%2Fstinfo%2F')
+        self.driver.get('https://mybk.hcmut.edu.vn/stinfo/logout')
+        self.driver.get(
+            'https://sso.hcmut.edu.vn/cas/login?service=http%3A%2F%2Fmybk.hcmut.edu.vn%2Fstinfo%2F')
 
-        self.driver.find_element(By.NAME,"username").send_keys("hoang.nguyen")
-        self.driver.find_element(By.NAME,"password").send_keys("123456")
-        self.driver.find_element(By.NAME,"submit").click()
-        time.sleep(1)
+        self.driver.find_element(
+            By.NAME, "username").send_keys("tan.lamcs1001")
+        self.driver.find_element(By.NAME, "password").send_keys("lnt@H1720")
+        self.driver.find_element(By.NAME, "submit").click()
+        time.sleep(5)
 
-        self.driver.find_element(By.XPATH,'/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div/div/a').click()
-        time.sleep(10)
+        self.driver.find_element(
+            By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
+        time.sleep(7)
 
         self.driver.find_element(By.ID, "menu-cmnd-edit").click()
-        time.sleep(10)
+        time.sleep(5)
 
-    def test_updateID(self, id, place, date, expectedResult):
+    def test_updateID(self, id, place, date):
         self.first_step()
-        idObj = self.driver.find_element(By.ID,"cmndEditCMND")
-        placeObj = self.driver.find_element(By.ID,"cmndnoicapEditCMND")
-        dateObj = self.driver.find_element(By.ID,"cmndngaycapEditCMND")
-        self.driver.execute_script(f"arguments[0].setAttribute('value',{id})", idObj)
-        self.driver.execute_script("arguments[0].setAttribute('value',{})".format(place), placeObj)
-        self.driver.execute_script(f"arguments[0].setAttribute('value',{date})", dateObj)
-        
-        self.driver.find_element(By.ID,"btn_save_cmnd").click()
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
 
-        if expectedResult == "Success":
-            time.sleep(10)
-            self.driver.find_element(By.XPATH,'/html/body/div[5]')
+        idObj.click()
+        idObj.send_keys(Keys.CONTROL + "a")
+        idObj.send_keys(Keys.DELETE)
 
-        else:
-            time.sleep(1)
-            self.driver.find_element(By.CLASS_NAME,"disabled")
+        placeObj.click()
+        placeObj.send_keys(Keys.CONTROL + "a")
+        placeObj.send_keys(Keys.DELETE)
 
-        time.sleep(1)
-        self.driver.get('https://mybk.hcmut.edu.vn/stinfo/logout')
-        time.sleep(1)
+        dateObj.click()
+        dateObj.send_keys(Keys.CONTROL + "a")
+        dateObj.send_keys(Keys.DELETE)
+
+        idObj.send_keys(id)
+        placeObj.send_keys(place)
+        dateObj.send_keys(date)
+        time.sleep(2)
+        self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        time.sleep(7)
+        noti = self.driver.find_element(
+            By.CLASS_NAME, 'bootbox-body')
+        if noti.text == "Thông tin cmnd của sinh viên đã được lưu!":
+            return "Success"
+        elif self.driver.find_element(By.CLASS_NAME, "btn btn-primary btn-send disabled"):
+            if self.driver.find_element(By.CLASS_NAME, "help-block with-errors"):
+                return "MissingValue"
+
 
 if __name__ == "__main__":
     excel = FileExcelReader('SecB_updateid_data.xlsx', 'Sheet1')
@@ -92,11 +108,11 @@ if __name__ == "__main__":
     test.setup_method()
     nRows = excel.getRowCount()
     for row in range(2, nRows + 1):
-        id = excel.readData(row,1)
-        place = excel.readData(row,2)
-        date = excel.readData(row,3)
-        expectedResult = excel.readData(row,4)
-        print(id, place, date)
+        id = excel.readData(row, 1)
+        place = excel.readData(row, 2)
+        date = excel.readData(row, 3)
+        expectedResult = excel.readData(row, 4)
+
         if id is None:
             id = ""
         if place is None:
@@ -105,9 +121,13 @@ if __name__ == "__main__":
             date = ""
 
         try:
-            result = test.test_updateID(id, place, date, expectedResult)
-            excel.writeData("Passed",row,5)
+            result = test.test_updateID(id, place, date)
+            if result == "expectedResult":
+                excel.writeData("Passed", row, 5)
+            else:
+                excel.writeData("Failed", row, 5)
         except:
-            excel.writeData("Failed",row,5)
+            print("error!")
+            excel.writeData("Failed", row, 5)
 
     test.teardown_method()
