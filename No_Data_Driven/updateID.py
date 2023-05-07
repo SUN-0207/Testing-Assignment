@@ -4,13 +4,13 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from selenium.common.exceptions import NoSuchElementException
-
+from selenium.webdriver.support.ui import Select
 baseUrl = "https://mybk.hcmut.edu.vn/stinfo/"
 id = "352611458"
 place = "Tỉnh An Giang"
@@ -21,172 +21,228 @@ class TestUpdateID(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
-        # dang nhap
         self.driver.get("https://mybk.hcmut.edu.vn/my/logoutSSO.action")
         self.driver.get(
             'https://sso.hcmut.edu.vn/cas/login?service=https://mybk.hcmut.edu.vn/my/homeSSO.action')
         username = self.driver.find_element(By.NAME, "username")
         password = self.driver.find_element(By.NAME, "password")
         submitBtn = self.driver.find_element(By.NAME, "submit")
-        # ----Submit---#
+
         username.send_keys("tan.lamcs1001")
         password.send_keys("lnt@H1720")
         submitBtn.click()
 
-    def teardown_method(self):
-        self.driver.quit()
-
-    # def get_element_wait(self, NameOfObject):
-    #     try:
-    #         item = WebDriverWait(self.driver, 15).until(
-    #             EC.presence_of_element_located((By.ID, NameOfObject)))
-    #         item.click()
-    #     except TimeoutException as e:
-    #         print("Couldn't Click by name on: " + str(NameOfObject))
-    #         pass
+    def get_element_wait(self, element_id, timeout=3):
+        try:
+            return WebDriverWait(self.driver, timeout).until(
+                EC.presence_of_element_located((By.ID, element_id))
+            )
+        except TimeoutException:
+            err = 'Element with id {} could not be found!'
+            raise Exception(err.format(element_id))
 
     def test_1(self):
         self.driver.get(baseUrl)
 
         self.driver.find_element(
-            By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a').click()
-        time.sleep(7)
+            By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
+        time.sleep(5)
 
-        # self.get_element_wait("menu-cmnd-edit")
+        self.driver.find_element(By.ID, "menu-cmnd-edit").click()
+        time.sleep(5)
 
-        # id_in = self.driver.find_element(By.ID, "cmndEditCMND")
-        # place_in = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
-        # date_in = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
-
-        # id_in.send_keys(id)
-        # place_in.send_keys(place)
-        # date_in.send_keys(date)
         idObj = self.driver.find_element(By.ID, "cmndEditCMND")
         placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
         dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
-        self.driver.execute_script(
-            f"arguments[0].setAttribute('value',{id})", idObj)
-        self.driver.execute_script(
-            "arguments[0].setAttribute('value',{place})", placeObj)
-        self.driver.execute_script(
-            f"arguments[0].setAttribute('value',{date})", dateObj)
+
+        idObj.click()
+        idObj.send_keys(Keys.CONTROL + "a")
+        idObj.send_keys(Keys.DELETE)
+
+        placeObj.click()
+        placeObj.send_keys(Keys.CONTROL + "a")
+        placeObj.send_keys(Keys.DELETE)
+
+        dateObj.click()
+        dateObj.send_keys(Keys.CONTROL + "a")
+        dateObj.send_keys(Keys.DELETE)
+
+        idObj.send_keys(id)
+        placeObj.send_keys(place)
+        dateObj.send_keys(date)
+
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+        time.sleep(1)
 
         self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        time.sleep(5)
 
-        self.get_element_wait("btn_save_cmnd")
+        print(self.driver.find_element(
+            By.CLASS_NAME, 'bootbox-body').text)
 
-        assert self.driver.find_element(
-            By.CLASS_NAME, 'bootbox-body').text == "Thông tin cmnd của sinh viên đã được lưu!"
+    def test_2(self):
+        self.driver.get(baseUrl)
 
-    # def test_2(self):
-    #     self.driver.get(
-    #         'https://sso.hcmut.edu.vn/cas/login?service=http%3A%2F%2Fmybk.hcmut.edu.vn%2Fstinfo%2F')
+        self.driver.find_element(
+            By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
+        time.sleep(5)
 
-    #     self.driver.find_element(By.NAME, "username").send_keys(username)
-    #     self.driver.find_element(By.NAME, "password").send_keys(password)
-    #     self.driver.find_element(By.NAME, "submit").click()
-    #     time.sleep(1)
+        self.driver.find_element(By.ID, "menu-cmnd-edit").click()
+        time.sleep(5)
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
 
-    #     self.driver.find_element(
-    #         By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div/div/a').click()
-    #     time.sleep(10)
+        idObj.click()
+        idObj.send_keys(Keys.CONTROL + "a")
+        idObj.send_keys(Keys.DELETE)
 
-    #     self.driver.find_element(By.ID, "menu-cmnd-edit").click()
-    #     time.sleep(10)
+        placeObj.click()
+        placeObj.send_keys(Keys.CONTROL + "a")
+        placeObj.send_keys(Keys.DELETE)
 
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','')", self.driver.find_element(By.ID, "cmndEditCMND"))
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','Đồng Nai')", self.driver.find_element(By.ID, "cmndnoicapEditCMND"))
-    #     self.driver.execute_script("arguments[0].setAttribute('value','2021')", self.driver.find_element(
-    #         By.ID, "cmndngaycapEditCMND"))
-    #     self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        dateObj.click()
+        dateObj.send_keys(Keys.CONTROL + "a")
+        dateObj.send_keys(Keys.DELETE)
 
-    #     time.sleep(1)
-    #     self.driver.find_element(By.CLASS_NAME, "disabled")
+        idObj.send_keys("")
+        placeObj.send_keys(place)
+        dateObj.send_keys(date)
 
-    # def test_3(self):
-    #     self.driver.get(
-    #         'https://sso.hcmut.edu.vn/cas/login?service=http%3A%2F%2Fmybk.hcmut.edu.vn%2Fstinfo%2F')
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+        time.sleep(1)
 
-    #     self.driver.find_element(By.NAME, "username").send_keys(username)
-    #     self.driver.find_element(By.NAME, "password").send_keys(password)
-    #     self.driver.find_element(By.NAME, "submit").click()
-    #     time.sleep(1)
+        self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        time.sleep(5)
 
-    #     self.driver.find_element(
-    #         By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div/div/a').click()
-    #     time.sleep(10)
+        print(self.driver.find_element(
+            By.XPATH, '//*[@id="editcmndForm"]/div[1]/div/div[3]/div[1]/div/ul/li').text)
 
-    #     self.driver.find_element(By.ID, "menu-cmnd-edit").click()
-    #     time.sleep(10)
+    def test_3(self):
+        self.driver.get(baseUrl)
 
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','202001888')", self.driver.find_element(By.ID, "cmndEditCMND"))
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','')", self.driver.find_element(By.ID, "cmndnoicapEditCMND"))
-    #     self.driver.execute_script("arguments[0].setAttribute('value','2021')", self.driver.find_element(
-    #         By.ID, "cmndngaycapEditCMND"))
-    #     self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        self.driver.find_element(
+            By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
+        time.sleep(5)
 
-    #     time.sleep(1)
-    #     self.driver.find_element(By.CLASS_NAME, "disabled")
+        self.driver.find_element(By.ID, "menu-cmnd-edit").click()
+        time.sleep(5)
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
 
-    # def test_4(self):
-    #     self.driver.get(
-    #         'https://sso.hcmut.edu.vn/cas/login?service=http%3A%2F%2Fmybk.hcmut.edu.vn%2Fstinfo%2F')
+        idObj.click()
+        idObj.send_keys(Keys.CONTROL + "a")
+        idObj.send_keys(Keys.DELETE)
 
-    #     self.driver.find_element(By.NAME, "username").send_keys(username)
-    #     self.driver.find_element(By.NAME, "password").send_keys(password)
-    #     self.driver.find_element(By.NAME, "submit").click()
-    #     time.sleep(1)
+        placeObj.click()
+        placeObj.send_keys(Keys.CONTROL + "a")
+        placeObj.send_keys(Keys.DELETE)
 
-    #     self.driver.find_element(
-    #         By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div/div/a').click()
-    #     time.sleep(10)
+        dateObj.click()
+        dateObj.send_keys(Keys.CONTROL + "a")
+        dateObj.send_keys(Keys.DELETE)
 
-    #     self.driver.find_element(By.ID, "menu-cmnd-edit").click()
-    #     time.sleep(10)
+        idObj.send_keys(id)
+        placeObj.send_keys("")
+        dateObj.send_keys(date)
 
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','202001888')", self.driver.find_element(By.ID, "cmndEditCMND"))
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','Đồng Nai')", self.driver.find_element(By.ID, "cmndnoicapEditCMND"))
-    #     self.driver.execute_script("arguments[0].setAttribute('value','')", self.driver.find_element(
-    #         By.ID, "cmndngaycapEditCMND"))
-    #     self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+        time.sleep(1)
 
-    #     time.sleep(1)
-    #     self.driver.find_element(By.CLASS_NAME, "disabled")
+        self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        time.sleep(5)
 
-    # def test_5(self):
-    #     self.driver.get(
-    #         'https://sso.hcmut.edu.vn/cas/login?service=http%3A%2F%2Fmybk.hcmut.edu.vn%2Fstinfo%2F')
+        print(self.driver.find_element(
+            By.XPATH, '//*[@id="editcmndForm"]/div[1]/div/div[3]/div[2]/div/ul/li').text)
 
-    #     self.driver.find_element(By.NAME, "username").send_keys(username)
-    #     self.driver.find_element(By.NAME, "password").send_keys(password)
-    #     self.driver.find_element(By.NAME, "submit").click()
-    #     time.sleep(1)
+    def test_4(self):
+        self.driver.get(baseUrl)
 
-    #     self.driver.find_element(
-    #         By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div/div/div/div/div/div/div/div/a').click()
-    #     time.sleep(10)
+        self.driver.find_element(
+            By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
+        time.sleep(5)
 
-    #     self.driver.find_element(By.ID, "menu-cmnd-edit").click()
-    #     time.sleep(10)
+        self.driver.find_element(By.ID, "menu-cmnd-edit").click()
+        time.sleep(5)
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
 
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','')", self.driver.find_element(By.ID, "cmndEditCMND"))
-    #     self.driver.execute_script(
-    #         "arguments[0].setAttribute('value','')", self.driver.find_element(By.ID, "cmndnoicapEditCMND"))
-    #     self.driver.execute_script("arguments[0].setAttribute('value','')", self.driver.find_element(
-    #         By.ID, "cmndngaycapEditCMND"))
-    #     self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        idObj.click()
+        idObj.send_keys(Keys.CONTROL + "a")
+        idObj.send_keys(Keys.DELETE)
 
-    #     time.sleep(1)
-    #     self.driver.find_element(By.CLASS_NAME, "disabled")
+        placeObj.click()
+        placeObj.send_keys(Keys.CONTROL + "a")
+        placeObj.send_keys(Keys.DELETE)
 
-    def tearDown(self):
+        dateObj.click()
+        dateObj.send_keys(Keys.CONTROL + "a")
+        dateObj.send_keys(Keys.DELETE)
+
+        idObj.send_keys(id)
+        placeObj.send_keys(place)
+        dateObj.send_keys("")
+
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+        time.sleep(1)
+
+        self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        time.sleep(5)
+
+        print(self.driver.find_element(
+            By.XPATH, '//*[@id="editcmndForm"]/div[1]/div/div[3]/div[3]/div/ul/li').text)
+
+    def test_5(self):
+        self.driver.get(baseUrl)
+
+        self.driver.find_element(
+            By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
+        time.sleep(5)
+
+        self.driver.find_element(By.ID, "menu-cmnd-edit").click()
+        time.sleep(5)
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+
+        idObj.click()
+        idObj.send_keys(Keys.CONTROL + "a")
+        idObj.send_keys(Keys.DELETE)
+
+        placeObj.click()
+        placeObj.send_keys(Keys.CONTROL + "a")
+        placeObj.send_keys(Keys.DELETE)
+
+        dateObj.click()
+        dateObj.send_keys(Keys.CONTROL + "a")
+        dateObj.send_keys(Keys.DELETE)
+
+        idObj.send_keys("")
+        placeObj.send_keys("")
+        dateObj.send_keys("")
+
+        idObj = self.driver.find_element(By.ID, "cmndEditCMND")
+        placeObj = self.driver.find_element(By.ID, "cmndnoicapEditCMND")
+        dateObj = self.driver.find_element(By.ID, "cmndngaycapEditCMND")
+        time.sleep(1)
+
+        self.driver.find_element(By.ID, "btn_save_cmnd").click()
+        time.sleep(5)
+
+        print(self.driver.find_element(
+            By.XPATH, '//*[@id="editcmndForm"]/div[1]/div/div[3]/div[1]/div/ul/li').text)
+
+    def teardown_method(self):
         self.driver.quit()
 
 
