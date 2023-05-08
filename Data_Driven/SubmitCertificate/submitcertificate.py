@@ -69,10 +69,10 @@ class SubmitCer():
         self.driver.get(
             "https://mybk.hcmut.edu.vn/apps/src/nopccav/index.aspx")
         self.driver.find_element(By.XPATH, '//*[@id="bnt_themmoi"]').click()
-        time.sleep(1)
+        time.sleep(2)
         selectType = Select(self.driver.find_element(By.ID, 'cbo_loaicc'))
         selectType.select_by_value("TOEIC_1")
-        time.sleep(1)
+        time.sleep(2)
         id = self.driver.find_element(
             By.NAME, "ctl00$ContentPlaceHolder1$txt_TOEIC_IdNumber")
         date = self.driver.find_element(
@@ -83,6 +83,8 @@ class SubmitCer():
             By.NAME, "ctl00$ContentPlaceHolder1$txt_TOEIC_Reading")
         total = self.driver.find_element(
             By.NAME, "ctl00$ContentPlaceHolder1$txt_TOEIC_TotalScore")
+        load_file = self.driver.find_element(
+            By.XPATH, '//*[@id="ctl00_ContentPlaceHolder1_ftp_ccav"]')
         id.send_keys("1111111111")
         date.send_keys("23/11/2022")
         readingInp.send_keys(reading)
@@ -90,11 +92,28 @@ class SubmitCer():
         total.send_keys(str(int(reading) + int(listening)))
         btn = self.driver.find_element(By.XPATH, '//*[@id="bnt_thoinhap"]')
         btn.click()
+        load_file.send_keys('.\TOEIC.jpg')
+        time.sleep(5)
+
+        btn = self.driver.find_element(
+            By.XPATH, '//*[@id="ctl00_ContentPlaceHolder1_bnt_xacnhan"]')
+        time.sleep(1)
+        btn.click()
+        time.sleep(6)
+
+        noti = self.driver.find_element(
+            By.XPATH, '/html/div[2]/div[2]/div[1]/div[2]/p/span').text
+        print(noti)
+        self.driver.find_element(
+            By.XPATH, '/html/div[2]/div[2]/div[2]/input').click()
+
+        time.sleep(2)
+        self.driver.find_element(
+            By.XPATH, '/html/body/form/div[4]/div/div[8]/table/tbody/tr[1]/td[7]/input[3]').click()
         if (expectedResult == "Success"):
-            self.driver.find_element(By.XPATH, '//*[@id="lst_danhsachccnn"]')
-        elif expectedResult == "Fail":
-            self.driver.find_element(By.XPATH, '//*[@id="lst_danhsachccnn"]')
-        return
+            assert noti == "Thông tin chứng chỉ đã được cập nhật"
+        elif (expectedResult == "Invalid"):
+            assert noti == "Invalid"
 
 
 if __name__ == "__main__":

@@ -43,10 +43,10 @@ class TestUpdateID(unittest.TestCase):
 
     def test_1(self):
         self.driver.get(baseUrl)
-
+        time.sleep(3)
         self.driver.find_element(
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
-        time.sleep(5)
+        time.sleep(10)
 
         self.driver.find_element(By.ID, "menu-cmnd-edit").click()
         time.sleep(5)
@@ -84,10 +84,10 @@ class TestUpdateID(unittest.TestCase):
 
     def test_2(self):
         self.driver.get(baseUrl)
-
+        time.sleep(3)
         self.driver.find_element(
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
-        time.sleep(5)
+        time.sleep(10)
 
         self.driver.find_element(By.ID, "menu-cmnd-edit").click()
         time.sleep(5)
@@ -124,10 +124,10 @@ class TestUpdateID(unittest.TestCase):
 
     def test_3(self):
         self.driver.get(baseUrl)
-
+        time.sleep(3)
         self.driver.find_element(
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
-        time.sleep(5)
+        time.sleep(10)
 
         self.driver.find_element(By.ID, "menu-cmnd-edit").click()
         time.sleep(5)
@@ -164,10 +164,10 @@ class TestUpdateID(unittest.TestCase):
 
     def test_4(self):
         self.driver.get(baseUrl)
-
+        time.sleep(3)
         self.driver.find_element(
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
-        time.sleep(5)
+        time.sleep(10)
 
         self.driver.find_element(By.ID, "menu-cmnd-edit").click()
         time.sleep(5)
@@ -204,10 +204,10 @@ class TestUpdateID(unittest.TestCase):
 
     def test_5(self):
         self.driver.get(baseUrl)
-
+        time.sleep(3)
         self.driver.find_element(
             By.XPATH, '/html/body/div[2]/div[2]/div/div/div[2]/div/div/div[2]/div[1]/div/div[2]/div/div/div[1]/div/div[1]/a/div').click()
-        time.sleep(5)
+        time.sleep(10)
 
         self.driver.find_element(By.ID, "menu-cmnd-edit").click()
         time.sleep(5)
