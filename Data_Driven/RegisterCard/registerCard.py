@@ -53,8 +53,8 @@ class TestRegisterSTCard():
         password = self.driver.find_element(By.NAME,"password")  
         submitBtn = self.driver.find_element(By.NAME,"submit")  
         
-        username.send_keys("huy.dangquang")
-        password.send_keys("0854001109")
+        username.send_keys("quan.thibluesky17")
+        password.send_keys("khacquan211")
         submitBtn.click()
   
     def teardown_method(self):
