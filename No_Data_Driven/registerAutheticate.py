@@ -19,8 +19,8 @@ class TestRegisterWithDraw(unittest.TestCase):
         password = self.driver.find_element(By.NAME,"password")  
         submitBtn = self.driver.find_element(By.NAME,"submit")  
         #----Submit---#
-        username.send_keys("huy.dangquang")
-        password.send_keys("0854001109")
+        username.send_keys("quan.thibluesky17")
+        password.send_keys("khacquan211")
         submitBtn.click()
 
     def get_element_wait(self, element_id, timeout=3):
